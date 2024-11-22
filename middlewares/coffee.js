@@ -1,4 +1,6 @@
+const { default: mongoose } = require("mongoose");
 const coffeeModel = require("../models/coffeeModel");
+const createHttpError = require("http-errors");
 
 async function getAllCoffees(req, res, next) {
   try {
@@ -31,7 +33,24 @@ async function createCoffee(req, res, next) {
   }
 }
 
+async function getCoffee(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    if (!mongoose.isValidObjectId(id)) throw createHttpError(400, "Invalid id");
+
+    const coffee = await coffeeModel.findById(id).exec();
+
+    if (!coffee) throw createHttpError(404, "Coffee not found");
+
+    res.status(200).json(coffee);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllCoffees,
   createCoffee,
+  getCoffee,
 };
