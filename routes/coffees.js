@@ -1,8 +1,8 @@
 const router = require("express").Router();
 
-const { getAllCoffees } = require("../middlewares/coffee");
+const { getAllCoffees, createCoffee } = require("../middlewares/coffee");
 
 // get all the coffees
-router.route("/").get(getAllCoffees);
+router.route("/").get(getAllCoffees).post(createCoffee);
 
 module.exports = router;

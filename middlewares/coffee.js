@@ -9,6 +9,29 @@ async function getAllCoffees(req, res, next) {
   }
 }
 
+async function createCoffee(req, res, next) {
+  try {
+    const { name, chef, supplier, taste, category, details } = req.body;
+    if (!name || !chef || !supplier || !taste || !category || !details) {
+      throw createHttpError(400, "All fields are required");
+    }
+
+    const newCoffee = await coffeeModel.create({
+      name,
+      chef,
+      supplier,
+      taste,
+      category,
+      details,
+    });
+
+    res.status(201).json(newCoffee);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllCoffees,
+  createCoffee,
 };
