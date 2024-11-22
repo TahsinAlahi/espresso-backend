@@ -4,4 +4,6 @@ const app = express();
 
 app.use(express.json());
 
+app.use("/api/coffees", require("./routes/coffees"));
+
 module.exports = app;
