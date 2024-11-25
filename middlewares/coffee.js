@@ -77,9 +77,26 @@ async function updateCoffee(req, res, next) {
   }
 }
 
+async function deleteCoffee(req, res, next) {
+  const { id } = req.params;
+
+  try {
+    if (!mongoose.isValidObjectId(id)) throw createHttpError(400, "Invalid id");
+
+    const deletedCoffee = await coffeeModel.findById(id).exec();
+    if (!deletedCoffee) throw createHttpError(404, "Coffee not found");
+
+    await deletedCoffee.deleteOne();
+    res.sendStatus(204);
+  } catch (error) {
+    next(error);
+  }
+}
+
 module.exports = {
   getAllCoffees,
   createCoffee,
   getCoffee,
   updateCoffee,
+  deleteCoffee,
 };
