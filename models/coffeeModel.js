@@ -11,6 +11,9 @@ const coffeeSchema = new mongoose.Schema({
   category: { type: String, required: [true, "Category is required"] },
   details: { type: String, required: [true, "Details is required"] },
   image: { type: String, required: [true, "Image is required"] },
+  price: { type: Number | String, required: [true, "Price is required"] },
 });
+
+name, chef, supplier, taste, category, details, price, image;
 
 module.exports = mongoose.model("Coffee", coffeeSchema);

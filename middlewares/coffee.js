@@ -54,7 +54,8 @@ async function updateCoffee(req, res, next) {
   try {
     if (!mongoose.isValidObjectId(id)) throw createHttpError(400, "Invalid id");
 
-    const { name, chef, supplier, taste, category, details } = req.body;
+    const { name, chef, supplier, taste, category, details, price, image } =
+      req.body;
 
     const updatedCoffee = await coffeeModel.findByIdAndUpdate(
       id,
@@ -65,6 +66,8 @@ async function updateCoffee(req, res, next) {
         ...(taste && { taste }),
         ...(category && { category }),
         ...(details && { details }),
+        ...(price && { price }),
+        ...(image && { image }),
       },
       { returnOriginal: false }
     );
