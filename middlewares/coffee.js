@@ -13,8 +13,18 @@ async function getAllCoffees(req, res, next) {
 
 async function createCoffee(req, res, next) {
   try {
-    const { name, chef, supplier, taste, category, details } = req.body;
-    if (!name || !chef || !supplier || !taste || !category || !details) {
+    const { name, chef, supplier, taste, category, details, image, price } =
+      req.body;
+    if (
+      !name ||
+      !chef ||
+      !supplier ||
+      !taste ||
+      !category ||
+      !details ||
+      !image ||
+      !price
+    ) {
       throw createHttpError(400, "All fields are required");
     }
 
@@ -25,6 +35,8 @@ async function createCoffee(req, res, next) {
       taste,
       category,
       details,
+      image,
+      price,
     });
 
     res.status(201).json(newCoffee);
